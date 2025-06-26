@@ -1,4 +1,3 @@
-
 import React from "react";
 
 export default function GameContainer() {
@@ -8,7 +7,7 @@ export default function GameContainer() {
         {/* Game Image */}
         <div className="game-image">
           <img
-            src="https://opposite-cormorant-6b6.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F8e5c5d63-b70f-4572-ac6b-5db6079780b0%2F8e5670dc-2829-4fe5-a5f6-1bda1930f4e3%2FUntitled.png?table=block&id=e646dbd0-3c4f-455f-9195-ba66b526e626&spaceId=8e5c5d63-b70f-4572-ac6b-5db6079780b0&width=1420&userId=&cache=v2"
+            src="https://play-lh.googleusercontent.com/6Qd5JIMEp1riMTC7ocJ22Hoz8LJ1IeJAwCCELBhrgkFItszrE7CHBm21iaNYJ3UI-BI=w2560-h1440-rw"
             alt="Match Market Sort: Triple 3D"
             className="game-screenshot"
           />

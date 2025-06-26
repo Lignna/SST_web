@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import ezgif from "../assets/ezgif1.png";
 import Header from "../components/header";
 import Footer from "../components/Footer";
-import GameSlider from './GameSlider';
 import { useLanguage } from "../components/LanguageContext";
 import Kcripto from './KriptoGalaxyBattle';
+import MovieCard from "./MovieCard ";
+import Game from "./Game"
 
 export default function GameService() {
 const [imageHeight, setImageHeight] = useState(0);
@@ -40,7 +41,8 @@ useEffect(() => {
         </div>
       </div>
       
-      <GameSlider/>
+    
+      <MovieCard/>
       <Kcripto/>
       <Footer/>
     </section>
