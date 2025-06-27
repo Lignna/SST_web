@@ -1,6 +1,7 @@
 import React from 'react';
-
+import { useLanguage } from "../components/LanguageContext";  
 const GameCard = () => {
+  const { language } = useLanguage(); 
   return (
     <div>
       <div className="game-container">
@@ -18,15 +19,18 @@ const GameCard = () => {
             <h1 className="game-title">Stickman Combat Legend</h1>
 
             <p className="game-description">
-              <strong>Stickman Combat Legend</strong> là trò chơi chiến đấu người que đơn giản nhất!!!
-              Trò chơi chiến đấu này sẽ cho phép bạn trở thành một trong những anh hùng của đội Siêu anh hùng, chiến đấu với những kẻ phản diện và bảo vệ toàn bộ hành tinh. Bước vào đấu trường và chiến đấu vì mạng sống của bạn. Nếu bạn thích chơi game thì đây là trò chơi dành cho bạn vì khả năng xử lý nhanh và các tính năng tuyệt vời.
+              <strong>Stickman Combat Legend</strong> 
+              {language === 'EN' 
+              ? " is the simplest stickman fighting game !!! This fighting game will allow you to become one of the heroes of the Superheroes team, battling villains and protecting the entire planet. Step into the arena and fight for your life. If you love playing games, then this is the game for you, with fast processing abilities and amazing features." 
+              : " là trò chơi chiến đấu người que đơn giản nhất!!! Trò chơi chiến đấu này sẽ cho phép bạn trở thành một trong những anh hùng của đội Siêu anh hùng, chiến đấu với những kẻ phản diện và bảo vệ toàn bộ hành tinh. Bước vào đấu trường và chiến đấu vì mạng sống của bạn. Nếu bạn thích chơi game thì đây là trò chơi dành cho bạn vì khả năng xử lý nhanh và các tính năng tuyệt vời."}
+              
             </p>
 
             <ul className="feature-list">
-              <li>Chế độ chơi đơn</li>
-              <li>Chế độ đối đầu</li>
-              <li>Chế độ giải đấu</li>
-              <li>Nhiều loại vũ khí để lựa chọn</li>
+              <li>{language === 'EN' ? "Single Player Mode" : "Chế độ chơi đơn "}</li>
+              <li>{language === 'EN' ? "Versus Mode" : "Chế độ đối đầu"}</li>
+              <li>{language === 'EN' ? "Tournament Mode" : "Chế độ giải đấu"}</li>
+              <li>{language === 'EN' ? "Multiple weapon types to choose from" : "Nhiều loại vũ khí để lựa chọn"}</li>
             </ul>
 
             <div className="download-section">
@@ -54,7 +58,8 @@ const GameCard = () => {
             <div className="card-layout-content">
               <h2 className="card-layout-title">Jungle Adventures: Super World</h2>
               <p className="card-layout-description">
-                Jungle Adventures là một cuộc phiêu lưu siêu của Zog, một cậu bé trong rừng muốn trở thành một thợ săn kho báu.
+              {language === 'EN' ? "Jungle Adventures is an epic adventure of Zog, a boy in the jungle who wants to become a treasure hunter." 
+              : "Jungle Adventures là một cuộc phiêu lưu siêu của Zog, một cậu bé trong rừng muốn trở thành một thợ săn kho báu. "}
               </p>
             </div>
             <div className="card-layout-image">
@@ -69,7 +74,9 @@ const GameCard = () => {
             <div className="card-layout-content">
               <h2 className="card-layout-title">Metal Shooter</h2>
               <p className="card-layout-description">
-                Một trò chơi hành động nền tảng di động miễn phí kiểu retro, trong đó bạn đóng vai một chiến binh chiến đấu vượt qua đám đông kẻ thù trong một loạt các khu vực khác nhau.
+              {language === 'EN' ? "A free retro-style mobile platform action game where you play as a warrior fighting through crowds of enemies in a series of different areas." 
+              : " Một trò chơi hành động nền tảng di động miễn phí kiểu retro, trong đó bạn đóng vai một chiến binh chiến đấu vượt qua đám đông kẻ thù trong một loạt các khu vực khác nhau."}
+               
               </p>
             </div>
             <div className="card-layout-image">

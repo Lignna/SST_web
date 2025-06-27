@@ -85,7 +85,7 @@ const GamePortfolio = () => {
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center px-10 mb-12">
       <div className="container mx-auto px-8 py-12 h-full">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center h-full">
           {/* Left Side - Project Details */}
