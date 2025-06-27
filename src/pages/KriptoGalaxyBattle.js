@@ -26,7 +26,7 @@ const KriptoGalaxyBattle = () => {
             <h1 className="text-4xl md:text-5xl font-bold">
               Kripto Galaxy Battle
             </h1>
-            <p className="text-lg md:text-xl text-yellow-100 text-justify">
+            <p className="text-lg md:text-xl text-white text-justify">
               {language === 'EN'
                 ? 'Kripto Galaxy Battle is an exciting idle "Play-to-Earn" NFT game built on KardiaChain. Explore a futuristic universe, collect rare gems, and complete quests to earn rewards. With low entry costs and engaging strategy gameplay, you can trade NFTs, stake tokens, and participate in a thriving marketplace. Enjoy this unique blend of gaming and DeFi!'
                 : 'Kripto Galaxy Battle là một trò chơi NFT "Play-to-Earn" NFT thú vị được xây dựng trên nền tảng KardiaChain. Khám phá một vũ trụ giả tưởng, thu thập các viên đá quý hiếm và hoàn thành các nhiệm vụ để kiếm phần thưởng. Với chi phí gia nhập thấp và lối chơi chiến lược hấp dẫn, bạn có thể giao dịch NFT, stake token và tham gia vào một thị trường sôi động. Hãy tận hưởng sự kết hợp độc đáo giữa game và DeFi này!'}

@@ -1,68 +1,6 @@
 import React from 'react';
 
-const MovieCard = ({ 
-  title, 
-  image, 
-  link,
-  index = 0
-}) => {
-  const isOdd = index % 2 === 0;
-  
-  return (
-    <div className="flex flex-col space-y-3">
-      <a href={link} target="_blank" rel="noopener noreferrer" className="relative block w-full h-[70%] cursor-pointer transform transition-all duration-300 hover:scale-105">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover rounded-3xl"
-          style={{
-            clipPath: isOdd 
-              ? 'polygon(5% 7%, 95% 15%, 95% 95%, 5% 95%)' 
-              : 'polygon(5% 15%, 95% 7%, 95% 95%, 5% 95%)'
-          }}
-        />
-      </a>
-      <h2 className="text-black text-lg font-bold leading-tight text-center">
-        {title}
-      </h2>
-    </div>
-  );
-};
-
-const TripleLayout = () => {
-  const sampleCards = [
-    {
-      title: "Trận chiến Siêu anh hùng",
-      image: "https://play-lh.googleusercontent.com/m5ebElQRasojsGouKbANSk1QqEuhAKNOE9Oa_Aaq_RhshVNixxUs2e5iXO2ZBQFLac0=w526-h296-rw",
-      link: "https://play.google.com/store/apps/details?id=com.stickman.shadow.battle"
-    },
-    {
-      title: "Galaxy Attack",
-      image: "https://play-lh.googleusercontent.com/XjXzZDtOc6i9A-Q9xp43JWwRIEDK1rBcmcibYNkmLAVfd9CXkmpuYPE4CqY569O9NAVD=w526-h296-rw",
-      link: "https://play.google.com/store/apps/details?id=com.airplane.galaxyattack.spaceshooter.spaceshipattack&hl=vi&gl=US"
-    },
-    {
-      title: "Zombie War",
-      image: "https://play-lh.googleusercontent.com/gFcenSSZTrF3jnfvlZYn4Qf6lfiPcAqON6t-PYkvJnLCjHoC_w7jzrX29gtcbSZQnQ=w526-h296-rw",
-      link: "https://play.google.com/store/apps/details?id=com.zombie.war.idle.defense"
-    },
-    {
-      title: "Cut the Lovebal",
-      image: "https://s.cafebazaar.ir/images/upload/screenshot/com.weegoon.cuttheloveballs-screenshots-0.jpg?x-img=v1/resize,h_600,lossless_false/optimize",
-      link: "https://play.google.com/store/apps/details?id=com.weegoon.cuttheloveballs"
-    },
-    {
-      title: "Block Puzzle",
-      image: "https://play-lh.googleusercontent.com/gOyhKSKczRdBluFN1Gdd3HGib0ZeilVTKdpV8Ff3BlarsL1G9JDLhKfJqsSNofz-EyM=w2560-h1440-rw",
-      link: "https://play.google.com/store/apps/details?id=com.os.block.puzzle.pirate.odyssey"
-    },
-    {
-      title: "2048 Block Puzzle",
-      image: "https://play-lh.googleusercontent.com/KVIHX7Gb3X0or71c-nRGVQcU9IXwxqVdhg4GnNRvf7-DOvOKBcLVBsloTh49ahbGauSL=w526-h296-rw",
-      link: "https://play.google.com/store/apps/details?id=net.wellyglobal.cyforce.puzzlegames.game2048.block.number.merge&hl=vi&gl=US"
-    }
-  ];
-
+const GameCard = () => {
   return (
     <div>
       <div className="game-container">
@@ -127,8 +65,6 @@ const TripleLayout = () => {
               />
             </div>
           </div>
-
-          {/* Giant Lift Heroes Card */}
           <div className="card-layout-card card-layout-card-right">
             <div className="card-layout-content">
               <h2 className="card-layout-title">Metal Shooter</h2>
@@ -147,7 +83,6 @@ const TripleLayout = () => {
         </div>
       </div>
 
-      {/* Phần MovieCards nằm dưới cùng */}
       <div className="p-8">
         <div className="max-w-[90%] mx-auto">
           <div className="
@@ -159,15 +94,6 @@ const TripleLayout = () => {
             gap-0
             justify-center
           ">
-            {sampleCards.map((card, index) => (
-              <MovieCard
-                key={index}
-                index={index}
-                title={card.title}
-                image={card.image}
-                link={card.link}
-              />
-            ))}
           </div>
         </div>
       </div>
@@ -430,4 +356,4 @@ const TripleLayout = () => {
   );
 };
 
-export default TripleLayout;
+export default GameCard;

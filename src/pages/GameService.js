@@ -4,8 +4,9 @@ import Header from "../components/header";
 import Footer from "../components/Footer";
 import { useLanguage } from "../components/LanguageContext";
 import Kcripto from './KriptoGalaxyBattle';
-import MovieCard from "./MovieCard ";
-import Game from "./Game"
+import GameCard from "./GameCard";
+import GamePortfolio from "./GamePortfolio ";
+
 
 export default function GameService() {
 const [imageHeight, setImageHeight] = useState(0);
@@ -41,8 +42,8 @@ useEffect(() => {
         </div>
       </div>
       
-    
-      <MovieCard/>
+      <GameCard/>
+      <GamePortfolio/>
       <Kcripto/>
       <Footer/>
     </section>

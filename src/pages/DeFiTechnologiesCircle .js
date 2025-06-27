@@ -473,7 +473,7 @@ const DeFiTechnologiesCircle = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Mock language context for demonstration
+  // Mock language context
   const language = 'EN';
   
   const technologies = [
@@ -528,21 +528,20 @@ const DeFiTechnologiesCircle = () => {
     }
   ];
 
-  // Detect screen size
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
-  }, []);
-
-  const radius = isMobile ? 180 : 320;
+  const radius = 320;
   const centerX = 50;
   const centerY = 50;
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -555,56 +554,29 @@ const DeFiTechnologiesCircle = () => {
   const calculatePosition = (index) => {
     const angle = (index * 360) / technologies.length - 90;
     const radian = (angle * Math.PI) / 180;
-    const radiusPercent = isMobile ? (radius / 6) : (radius / 10);
-    const x = centerX + radiusPercent * Math.cos(radian);
-    const y = centerY + radiusPercent * Math.sin(radian);
+    const x = centerX + (radius / 10) * Math.cos(radian);
+    const y = centerY + (radius / 10) * Math.sin(radian);
     return { x: `${x}%`, y: `${y}%` };
   };
 
-  return (
-    <div style={styles.container}>
-      
-      <div style={styles.backgroundCircle1}></div>
-      <div style={styles.backgroundCircle2}></div>
-      <div style={styles.backgroundCircle3}></div>
-
-      
-      <div style={styles.headerTitle}>
-        <h1 style={styles.mainTitle}>
-          <span style={styles.defiBold}>DeFi</span>
-          <span style={styles.defiSubtitle}> Decentralized Finance</span>
-        </h1>
+  const renderDesktopView = () => (
+    <>
+      {/* Left Info Container */}
+      <div style={styles.leftInfoContainer}>
+        <div style={styles.infoCard}>
+          <p style={styles.infoText}>
+            {language === 'EN' ? "Decentralize Finance (DeFi) is an important field in the Blockchain sector" : "Tài chính phi tập trung (DeFi) là một lĩnh vực quan trọng trong ngành Blockchain"}
+          </p>
+        </div>
       </div>
 
-      {/* Info và Stats - Ẩn trên mobile */}
-      {!isMobile && (
-        <>
-          <div style={styles.leftInfoContainer}>
-            <div style={styles.infoCard}>
-              <p style={styles.infoText}>
-                {language === 'EN' ? "Decentralize Finance (DeFi) is an important field in the Blockchain sector" : "Tài chính phi tập trung (DeFi) là một lĩnh vực quan trọng trong ngành Blockchain"}
-              </p>
-            </div>
-          </div>
-
-          <div style={styles.statsContainer}>
-            <div style={styles.statCard}>
-              <span style={styles.statNumber}>$43B</span>
-              <span style={styles.statLabel}>{language === 'EN' ? "Total Assets Locked in DeFi (Nov 2023)" : "Tổng tài sản khóa trong DeFi (11/2023)"}</span>
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* Mobile Stats - Hiển thị dưới title trên mobile */}
-      {isMobile && (
-        <div style={styles.mobileStatsContainer}>
-          <div style={styles.mobileStatCard}>
-            <span style={styles.mobileStatNumber}>$43B</span>
-            <span style={styles.mobileStatLabel}>Total Assets Locked in DeFi</span>
-          </div>
+      {/* Stats Container */}
+      <div style={styles.statsContainer}>
+        <div style={styles.statCard}>
+          <span style={styles.statNumber}>$43B</span>
+          <span style={styles.statLabel}>{language === 'EN' ? "Total Assets Locked in DeFi (Nov 2023)" : "Tổng tài sản khóa trong DeFi (11/2023)"}</span>
         </div>
-      )}
+      </div>
 
       {/* Circle Container */}
       <div style={styles.circleContainer}>
@@ -612,12 +584,12 @@ const DeFiTechnologiesCircle = () => {
         <div style={styles.centralCircle}>
           <div style={styles.centralContent}>
             <h2 style={styles.centralTitle}>{language === 'EN' ? "Technologies Used in" : "Công nghệ được dùng"}</h2>
-            <h2 style={styles.centralSubtitle}> {language === 'EN' ? "Blockchain Sector" : "trong Blockchain"}</h2>
+            <h2 style={styles.centralSubtitle}>{language === 'EN' ? "Blockchain Sector" : "trong Blockchain"}</h2>
           </div>
           <div style={styles.centralGlow}></div>
         </div>
 
-        {/* Technology Items */}
+        {/* Technologies */}
         {technologies.map((tech, index) => {
           const position = calculatePosition(index);
           const IconComponent = tech.icon;
@@ -634,7 +606,6 @@ const DeFiTechnologiesCircle = () => {
                 zIndex: isActive ? 10 : 5
               }}
               onMouseEnter={() => setActiveIndex(index)}
-              onClick={() => setActiveIndex(index)} // Touch support
             >
               <div 
                 style={{
@@ -649,7 +620,7 @@ const DeFiTechnologiesCircle = () => {
               >
                 <div style={styles.techIcon}>
                   <IconComponent 
-                    size={isMobile ? 18 : 24} 
+                    size={24} 
                     color={isActive ? 'white' : tech.color}
                   />
                 </div>
@@ -669,7 +640,6 @@ const DeFiTechnologiesCircle = () => {
                 </div>
               </div>
 
-              {/* Connection Line */}
               <div 
                 style={{
                   ...styles.connectionLine,
@@ -681,20 +651,97 @@ const DeFiTechnologiesCircle = () => {
           );
         })}
 
-        {/* Orbital Ring */}
         <div style={styles.orbitalRing}></div>
       </div>
+    </>
+  );
 
-      {/* Mobile Info - Hiển thị dưới cùng trên mobile */}
-      {isMobile && (
-        <div style={styles.mobileInfoContainer}>
-          <div style={styles.mobileInfoCard}>
-            <p style={styles.mobileInfoText}>
-              Decentralized Finance (DeFi) is an important field in the Blockchain sector
-            </p>
+  const renderMobileView = () => (
+    <>
+      {/* Mobile Info Section */}
+      <div style={styles.mobileInfoSection}>
+        <div style={styles.mobileInfoCard}>
+          <p style={styles.mobileInfoText}>
+            {language === 'EN' ? "Decentralize Finance (DeFi) is an important field in the Blockchain sector" : "Tài chính phi tập trung (DeFi) là một lĩnh vực quan trọng trong ngành Blockchain"}
+          </p>
+          <div style={styles.mobileStats}>
+            <span style={styles.mobileStatNumber}>$43B</span>
+            <span style={styles.mobileStatLabel}>
+              {language === 'EN' ? "Total Assets Locked in DeFi (Nov 2023)" : "Tổng tài sản khóa trong DeFi (11/2023)"}
+            </span>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Mobile Technologies Grid */}
+      <div style={styles.mobileGridContainer}>
+        <h2 style={styles.mobileGridTitle}>
+          {language === 'EN' ? "Technologies Used in Blockchain Sector" : "Công nghệ được dùng trong Blockchain"}
+        </h2>
+        <div style={styles.mobileGrid}>
+          {technologies.map((tech, index) => {
+            const IconComponent = tech.icon;
+            const isActive = index === activeIndex;
+            
+            return (
+              <div
+                key={index}
+                style={{
+                  ...styles.mobileCard,
+                  background: isActive ? tech.gradient : 'rgba(255, 255, 255, 0.1)',
+                  border: isActive ? `2px solid ${tech.color}` : '2px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: isActive 
+                    ? `0 10px 30px ${tech.color}40, 0 0 20px ${tech.color}30`
+                    : '0 8px 25px rgba(0, 0, 0, 0.3)',
+                  transform: isActive ? 'scale(1.05)' : 'scale(1)'
+                }}
+                onClick={() => setActiveIndex(index)}
+              >
+                <div style={styles.mobileCardIcon}>
+                  <IconComponent 
+                    size={28} 
+                    color={isActive ? 'white' : tech.color}
+                  />
+                </div>
+                <div style={styles.mobileCardContent}>
+                  <h3 style={{
+                    ...styles.mobileCardTitle,
+                    color: isActive ? 'white' : tech.color
+                  }}>
+                    {tech.title}
+                  </h3>
+                  <p style={{
+                    ...styles.mobileCardSubtitle,
+                    color: isActive ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.7)'
+                  }}>
+                    {tech.subtitle}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div style={styles.container}>
+      {/* Background Circles */}
+      <div style={styles.backgroundCircle1}></div>
+      <div style={styles.backgroundCircle2}></div>
+      <div style={styles.backgroundCircle3}></div>
+
+      {/* Header Title */}
+      <div style={styles.headerTitle}>
+        <h1 style={styles.mainTitle}>
+          <span style={styles.defiBold}>DeFi</span>
+          <span style={styles.defiSubtitle}> Decentralized Finance</span>
+        </h1>
+      </div>
+
+      {/* Render based on screen size */}
+      {isMobile ? renderMobileView() : renderDesktopView()}
     </div>
   );
 };
@@ -708,17 +755,17 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     position: 'relative',
     overflow: 'hidden',
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    padding: 'clamp(1rem, 3vw, 2rem)',
+    padding: '2rem',
     boxSizing: 'border-box'
   },
   backgroundCircle1: {
     position: 'absolute',
-    width: 'clamp(300px, 50vw, 900px)',
-    height: 'clamp(300px, 50vw, 900px)',
+    width: 'min(900px, 50vw)',
+    height: 'min(900px, 50vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
     top: '5%',
@@ -727,8 +774,8 @@ const styles = {
   },
   backgroundCircle2: {
     position: 'absolute',
-    width: 'clamp(200px, 40vw, 700px)',
-    height: 'clamp(200px, 40vw, 700px)',
+    width: 'min(700px, 40vw)',
+    height: 'min(700px, 40vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 70%)',
     bottom: '5%',
@@ -737,8 +784,8 @@ const styles = {
   },
   backgroundCircle3: {
     position: 'absolute',
-    width: 'clamp(150px, 30vw, 500px)',
-    height: 'clamp(150px, 30vw, 500px)',
+    width: 'min(500px, 30vw)',
+    height: 'min(500px, 30vw)',
     borderRadius: '50%',
     background: 'radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%)',
     top: '50%',
@@ -746,20 +793,17 @@ const styles = {
     animation: 'float 15s ease-in-out infinite'
   },
   headerTitle: {
-    position: 'absolute',
-    top: 'clamp(1rem, 5vh, 3rem)',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    position: 'relative',
     textAlign: 'center',
     zIndex: 20,
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    marginBottom: '2rem'
   },
   mainTitle: {
     margin: 0,
-    fontSize: 'clamp(1.5rem, 5vw, 3rem)',
-    fontWeight: '700',
-    lineHeight: '1.2'
+    fontSize: 'clamp(2rem, 6vw, 4rem)',
+    fontWeight: '700'
   },
   defiBold: {
     color: '#3B82F6',
@@ -769,11 +813,12 @@ const styles = {
     color: 'rgba(255, 255, 255, 0.9)',
     fontWeight: '300'
   },
-  // Desktop side cards
+  
+  // Desktop Styles
   leftInfoContainer: {
     position: 'absolute',
     top: '50%',
-    left: 'max(1rem, 2vw)',
+    left: 'max(2rem, 2vw)',
     transform: 'translateY(-50%)',
     zIndex: 20,
     maxWidth: 'calc(25vw - 2rem)'
@@ -798,7 +843,7 @@ const styles = {
   statsContainer: {
     position: 'absolute',
     top: '50%',
-    right: 'max(1rem, 2vw)',
+    right: 'max(2rem, 2vw)',
     transform: 'translateY(-50%)',
     zIndex: 20,
     maxWidth: 'calc(25vw - 2rem)'
@@ -829,82 +874,20 @@ const styles = {
     lineHeight: '1.4',
     fontWeight: '300'
   },
-  // Mobile stats (under title)
-  mobileStatsContainer: {
-    position: 'absolute',
-    top: 'clamp(6rem, 15vh, 8rem)',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 20,
-    width: '90%',
-    maxWidth: '300px'
-  },
-  mobileStatCard: {
-    background: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    padding: '1rem',
-    borderRadius: '0.75rem',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    boxSizing: 'border-box'
-  },
-  mobileStatNumber: {
-    fontSize: '1.5rem',
-    fontWeight: '700',
-    color: '#F59E0B',
-    marginBottom: '0.25rem',
-    textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
-  },
-  mobileStatLabel: {
-    fontSize: '0.8rem',
-    color: 'rgba(255, 255, 255, 0.8)',
-    lineHeight: '1.3',
-    fontWeight: '300'
-  },
-  // Mobile info (bottom)
-  mobileInfoContainer: {
-    position: 'absolute',
-    bottom: 'clamp(1rem, 5vh, 3rem)',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    zIndex: 20,
-    width: '90%',
-    maxWidth: '350px'
-  },
-  mobileInfoCard: {
-    background: 'rgba(255, 255, 255, 0.1)',
-    backdropFilter: 'blur(10px)',
-    padding: '1rem',
-    borderRadius: '0.75rem',
-    border: '1px solid rgba(255, 255, 255, 0.2)',
-    textAlign: 'center',
-    boxSizing: 'border-box'
-  },
-  mobileInfoText: {
-    fontSize: '0.8rem',
-    color: 'rgba(255, 255, 255, 0.9)',
-    margin: 0,
-    lineHeight: '1.5',
-    fontWeight: '300'
-  },
   circleContainer: {
     position: 'relative',
-    width: 'clamp(350px, 85vw, 800px)',
-    height: 'clamp(350px, 85vw, 800px)',
+    width: 'min(800px, 70vw)',
+    height: 'min(800px, 70vw)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     maxWidth: '100%',
-    maxHeight: '70vh',
-    marginTop: 'clamp(2rem, 8vh, 4rem)'
+    maxHeight: '100%'
   },
   centralCircle: {
     position: 'absolute',
-    width: 'clamp(140px, 30vw, 240px)',
-    height: 'clamp(140px, 30vw, 240px)',
+    width: 'min(240px, 25vw)',
+    height: 'min(240px, 25vw)',
     borderRadius: '50%',
     background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2))',
     backdropFilter: 'blur(20px)',
@@ -918,23 +901,23 @@ const styles = {
   centralContent: {
     textAlign: 'center',
     zIndex: 2,
-    padding: 'clamp(0.5rem, 2vw, 1rem)'
+    padding: '1rem'
   },
   centralTitle: {
-    fontSize: 'clamp(0.7rem, 2.5vw, 1.2rem)',
+    fontSize: 'clamp(0.9rem, 1.5vw, 1.2rem)',
     fontWeight: '600',
     color: 'white',
-    margin: '0 0 0.25rem 0',
+    margin: '0 0 0.5rem 0',
     textShadow: '0 0 20px rgba(255, 255, 255, 0.5)',
-    lineHeight: '1.2'
+    lineHeight: '1.3'
   },
   centralSubtitle: {
-    fontSize: 'clamp(0.7rem, 2.5vw, 1.2rem)',
+    fontSize: 'clamp(0.9rem, 1.5vw, 1.2rem)',
     color: 'rgba(255, 255, 255, 0.9)',
     margin: 0,
     fontWeight: '600',
     letterSpacing: '0.5px',
-    lineHeight: '1.2'
+    lineHeight: '1.3'
   },
   centralGlow: {
     position: 'absolute',
@@ -950,14 +933,12 @@ const styles = {
     transition: 'all 0.5s ease-out'
   },
   techCard: {
-    width: 'clamp(100px, 18vw, 150px)',
-    height: 'clamp(100px, 18vw, 150px)',
-    padding: 'clamp(0.75rem, 2vw, 1.2rem)',
-    borderRadius: 'clamp(0.75rem, 2vw, 1rem)',
+    width: 'min(150px, 12vw)',
+    padding: '1.2rem',
+    borderRadius: '1rem',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
     textAlign: 'center',
     cursor: 'pointer',
     transition: 'all 0.3s ease-out',
@@ -965,8 +946,8 @@ const styles = {
     boxSizing: 'border-box'
   },
   techIcon: {
-    marginBottom: 'clamp(0.4rem, 1vw, 0.75rem)',
-    padding: 'clamp(0.3rem, 1vw, 0.6rem)',
+    marginBottom: '0.75rem',
+    padding: '0.6rem',
     borderRadius: '50%',
     background: 'rgba(255, 255, 255, 0.1)'
   },
@@ -976,22 +957,22 @@ const styles = {
     alignItems: 'center'
   },
   techTitle: {
-    fontSize: 'clamp(0.6rem, 1.8vw, 0.9rem)',
+    fontSize: 'clamp(0.7rem, 1vw, 0.9rem)',
     fontWeight: '600',
-    margin: '0 0 0.15rem 0',
-    lineHeight: '1.1'
+    margin: '0 0 0.25rem 0',
+    lineHeight: '1.2'
   },
   techSubtitle: {
-    fontSize: 'clamp(0.5rem, 1.4vw, 0.7rem)',
+    fontSize: 'clamp(0.6rem, 0.9vw, 0.8rem)',
     margin: 0,
-    lineHeight: '1.1',
+    lineHeight: '1.2',
     fontWeight: '300'
   },
   connectionLine: {
     position: 'absolute',
     width: '2px',
-    height: 'clamp(40px, 8vw, 70px)',
-    top: 'clamp(-20px, -4vw, -35px)',
+    height: '70px',
+    top: '-35px',
     left: '50%',
     transform: 'translateX(-50%)',
     transformOrigin: 'bottom',
@@ -1000,8 +981,8 @@ const styles = {
   },
   orbitalRing: {
     position: 'absolute',
-    width: 'clamp(320px, 75vw, 720px)',
-    height: 'clamp(320px, 75vw, 720px)',
+    width: 'min(720px, 65vw)',
+    height: 'min(720px, 65vw)',
     borderRadius: '50%',
     border: '1px dashed rgba(255, 255, 255, 0.2)',
     top: '50%',
@@ -1009,9 +990,104 @@ const styles = {
     transform: 'translate(-50%, -50%)',
     zIndex: 1,
     animation: 'rotate 60s linear infinite'
+  },
+
+  // Mobile Styles
+  mobileInfoSection: {
+    width: '100%',
+    zIndex: 20,
+    marginBottom: '2rem'
+  },
+  mobileInfoCard: {
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(10px)',
+    padding: '1.5rem',
+    borderRadius: '1rem',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    textAlign: 'center',
+    boxSizing: 'border-box'
+  },
+  mobileInfoText: {
+    fontSize: '1rem',
+    color: 'rgba(255, 255, 255, 0.9)',
+    margin: '0 0 1.5rem 0',
+    lineHeight: '1.6',
+    fontWeight: '300'
+  },
+  mobileStats: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '0.5rem'
+  },
+  mobileStatNumber: {
+    fontSize: '2.5rem',
+    fontWeight: '700',
+    color: '#F59E0B',
+    textShadow: '0 0 20px rgba(245, 158, 11, 0.5)'
+  },
+  mobileStatLabel: {
+    fontSize: '0.9rem',
+    color: 'rgba(255, 255, 255, 0.8)',
+    lineHeight: '1.4',
+    fontWeight: '300'
+  },
+  mobileGridContainer: {
+    width: '100%',
+    zIndex: 20
+  },
+  mobileGridTitle: {
+    fontSize: '1.5rem',
+    fontWeight: '600',
+    color: 'white',
+    textAlign: 'center',
+    margin: '0 0 2rem 0',
+    textShadow: '0 0 20px rgba(255, 255, 255, 0.5)'
+  },
+  mobileGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '1rem',
+    width: '100%'
+  },
+  mobileCard: {
+    padding: '1.5rem',
+    borderRadius: '1rem',
+    backdropFilter: 'blur(10px)',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    textAlign: 'center',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease-out',
+    boxSizing: 'border-box'
+  },
+  mobileCardIcon: {
+    marginBottom: '1rem',
+    padding: '0.8rem',
+    borderRadius: '50%',
+    background: 'rgba(255, 255, 255, 0.1)'
+  },
+  mobileCardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
+  },
+  mobileCardTitle: {
+    fontSize: '1rem',
+    fontWeight: '600',
+    margin: '0 0 0.5rem 0',
+    lineHeight: '1.2'
+  },
+  mobileCardSubtitle: {
+    fontSize: '0.8rem',
+    margin: 0,
+    lineHeight: '1.2',
+    fontWeight: '300'
   }
 };
 
+// Add keyframes
 const styleSheet = document.createElement("style");
 styleSheet.type = "text/css";
 styleSheet.innerText = `
@@ -1028,20 +1104,6 @@ styleSheet.innerText = `
   @keyframes float {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-20px); }
-  }
-  
-  @media (hover: none) and (pointer: coarse) {
-    * {
-      touch-action: manipulation;
-    }
-  }
-  
-  @media (min-width: 768px) and (max-width: 1024px) {
-    /* Fine-tune for tablets */
-  }
-  
-  @media (max-width: 768px) and (orientation: landscape) {
-    /* Specific adjustments for mobile landscape */
   }
 `;
 document.head.appendChild(styleSheet);
